@@ -1,6 +1,7 @@
 ﻿using Backend.API.Contracts;
 using Backend.API.Models;
 using Backend.API.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;

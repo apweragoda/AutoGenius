@@ -6,5 +6,6 @@ namespace Backend.API.Contracts
     {
         public Task<IEnumerable<UserModel>> GetUsers();
         public Task<UserModel> GetUser(int id);
+        public Task<UserModel> CheckLogin(string email, string password);
     }
 }

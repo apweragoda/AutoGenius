@@ -19,8 +19,8 @@ namespace Backend.API.Repository
         {
             var procedureName = "sp_GetUserById";
             var parameters = new DynamicParameters();
-            parameters.Add("Id", id, DbType.Int32, ParameterDirection.Input);
-            using (var connection = _context.CreateConnection())
+                parameters.Add("Id", id, DbType.Int32, ParameterDirection.Input);
+                using (var connection = _context.CreateConnection())
             {
                 var user = await connection.QueryFirstOrDefaultAsync<UserModel>
                     (procedureName, parameters, commandType: CommandType.StoredProcedure);
@@ -37,5 +37,22 @@ namespace Backend.API.Repository
                 return users.ToList();
             }
         }
+
+    public async Task<UserModel> CheckLogin(string email, string password)
+        {
+            var procedureName = "sp_CheckLogin";
+            var parameters = new DynamicParameters();
+            parameters.Add("Email", email, DbType.String, ParameterDirection.Input);
+            parameters.Add("Password", password, DbType.String, ParameterDirection.Input);
+        
+            using (var connection = _context.CreateConnection())
+            {
+                var user = await connection.QueryFirstOrDefaultAsync<UserModel>
+                    (procedureName, parameters, commandType: CommandType.StoredProcedure);
+                return user;
+            }
+        }
+
+
     }
 }
