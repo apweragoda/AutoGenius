@@ -25,7 +25,7 @@ namespace Backend.API.Controllers
             _userRepo = userRepo;
         }
 
-        [HttpPost]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(string email, string password)
         {
             if (email != null && password != null)
@@ -66,16 +66,69 @@ namespace Backend.API.Controllers
             }
         }
 
-        // PUT api/<AccountController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+
+        [HttpPost("Register")]
+        public async Task<IActionResult> Register(UserModel user)
         {
+            try
+            {
+                if (user.Email != null && user.Password != null) 
+                {
+                    var userDb = await _userRepo.Register(user);
+
+                    return Ok(userDb);
+                }
+                return BadRequest();
+
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
-        // DELETE api/<AccountController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+        // UPDATE api/<AccountController>/
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(UserModel user)
         {
+            try
+            {
+                if (user != null)
+                {
+                    var userDb = await _userRepo.UpdateUser(user);
+
+                    return Ok(userDb);
+                }
+                return BadRequest();
+
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
+        }
+
+
+        // DELETE api/<AccountController>/email
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser(string email)
+        {
+            try
+            {
+                if (email != null)
+                {
+                    var userDb = await _userRepo.DeleteUser(email);
+
+                    return Ok(userDb);
+                }
+                return BadRequest();
+
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
     }
 }
