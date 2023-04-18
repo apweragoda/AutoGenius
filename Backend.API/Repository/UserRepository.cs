@@ -33,11 +33,9 @@ namespace Backend.API.Repository
         public async Task<IEnumerable<UserModel>> GetUsers()
         {
             var query = "sp_GetAllUsers";
-            using (var connection = _context.CreateConnection())
-            {
-                var users = await connection.QueryAsync<UserModel>(query);
-                return users.ToList();
-            }
+            using var connection = _context.CreateConnection();
+            var users = await connection.QueryAsync<UserModel>(query);
+            return users.ToList();
         }
 
         public async Task<UserModel> CheckLogin(string email, string password)

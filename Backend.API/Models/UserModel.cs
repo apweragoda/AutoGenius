@@ -1,6 +1,4 @@
 ﻿
-using System.ComponentModel.DataAnnotations;
-
 namespace Backend.API.Models
 {
     public class UserModel
